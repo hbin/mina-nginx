@@ -34,7 +34,7 @@ Add this to your `config/deploy.rb` file:
 
     require 'mina/nginx'
 
-Make sure the following settings are setted in your `config/deploy.rb`:
+Make sure the following settings are set in your `config/deploy.rb`:
 
 * `application` - application name
 * `server_name` - your application's server_name in nginx (e.g. example.com)(optional)
@@ -47,10 +47,9 @@ $ mina nginx:setup
 $ mina nginx:link
 ```
 
-Be sure to edit `shared/config/nginx.conf` on your server. Or you can parse an sample
-configuration file by `mina nginx:parse` on your server.
+You can parse an sample configuration file by `mina nginx:parse` on your server.
 
-Then:
+Be sure to edit `shared/config/nginx.conf`, and then:
 
 ```
 $ mina nginx:reload
@@ -58,7 +57,7 @@ $ mina nginx:reload
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/mina-nginx/fork )
+1. Fork it ( http://github.com/hbin/mina-nginx/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
