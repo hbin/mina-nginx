@@ -6,6 +6,7 @@ namespace :nginx do
   set_default :nginx_path,     "/etc/nginx"
   set_default :nginx_config,   -> { "#{deploy_to}/#{shared_path}/config/nginx.conf" }
   set_default :nginx_config_e, -> { "#{nginx_path}/sites-enabled/#{application}.conf" }
+  set_default :nginx_server_socket_path, -> { "#{deploy_to}/#{shared_path}/tmp/pids/unicorn.pid" }
 
   desc 'Setup Nginx'
   task :setup => :environment do
@@ -24,7 +25,6 @@ namespace :nginx do
   task :parse => :environment do
     content = erb(nginx_template)
     queue %(echo '#{content}' > #{nginx_config})
-    queue %(cat #{nginx_config})
     queue %(echo "-----> Be sure to edit 'shared/config/nginx.conf'.")
   end
 
