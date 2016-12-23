@@ -6,7 +6,7 @@ require 'mina/nginx/version'
 Gem::Specification.new do |spec|
   spec.name          = 'mina-nginx'
   spec.version       = Mina::Nginx::VERSION
-  spec.authors       = ['hbin']
+  spec.authors       = ['hbin', 'anulman']
   spec.email         = ['huangbin88@foxmail.com']
   spec.summary       = %(Mina tasks for handle with Nginx.)
   spec.description   = %(Configuration and managements Mina tasks for Nginx.)
