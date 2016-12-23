@@ -5,55 +5,49 @@
 
 This gem provides several mina tasks:
 
-    mina nginx:link     # Symlinking nginx config file
-    mina nginx:parse    # Parse nginx configuration file and upload it to the server
+    mina nginx:install  # Install template config to host repo for easy overrides
+    mina nginx:setup    # Install config file to the server's shared dir + symlink
+    mina nginx:print    # Parse & print the nginx config
+
     mina nginx:reload   # Reload Nginx
     mina nginx:restart  # Restart Nginx
-    mina nginx:setup    # Setup Nginx
     mina nginx:start    # Start Nginx
     mina nginx:status   # Status Nginx
     mina nginx:stop     # Stop Nginx
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your application's Gemfile, then `bundle install`:
 
     gem 'mina-nginx', :require => false
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install mina-nginx
-
-## Usage
-
-Add this to your `config/deploy.rb` file:
+Once installed, add this to your `config/deploy.rb` file:
 
     require 'mina/nginx'
 
-Make sure the following settings are set in your `config/deploy.rb`:
+Install the base template to your repo's `lib/mina/templates` directory:
 
-* `application` - application name
-* `server_name` - your application's server_name in nginx (e.g. example.com)(optional)
-* `deploy_to`   - deployment path
+    $ bundle exec mina nginx:install
 
-Launch new tasks:
+Consider variables used by the nginx config, particularly:
 
-```
-$ mina nginx:setup
-$ mina nginx:link
-```
+* `application`       - application name; defaults to 'application'
+* `nginx_socket_path` - path to socket file used in nginx upstream directive
+* `server_name`       - application's nginx server_name (e.g. example.com); defaults to value for `domain`
+* `domain`            - fqdn you are deploying to
+* `deploy_to`         - deployment path
+* `current_path`      - current revision path
 
-You can parse an sample configuration file by `mina nginx:parse` on your server.
+Edit installed template as required.
 
-Be sure to edit `shared/config/nginx.conf`, and then:
+## Recommended Usage
 
-```
-$ mina nginx:reload
-```
+1. Follow install steps above; and
+2. Invoke `nginx:setup` in your main `setup` task
+3. Run `nginx:setup` (or base `setup`) to install config changes
+
+n.b. if the config template has not been installed locally, `mina-nginx` will
+fall back to the default template gracefully.
 
 ## Contributing
 
