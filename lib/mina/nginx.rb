@@ -18,7 +18,7 @@ namespace :nginx do
       if File.exist? installed_path
         error! %(file exists; please rm to continue: #{installed_path})
       else
-        command %(mkdir -p lib/mina/templates)
+        command %(mkdir -p config/deploy/templates)
         command %(cp #{nginx_template} #{installed_path})
       end
     end
@@ -64,7 +64,7 @@ namespace :nginx do
 
   def path_for_template installed: true
     installed ?
-      File.expand_path('./lib/mina/templates/nginx.conf.erb') :
+      File.expand_path('./config/deploy/templates/nginx.conf.erb') :
       File.expand_path('../templates/nginx.conf.erb', __FILE__)
   end
 end
