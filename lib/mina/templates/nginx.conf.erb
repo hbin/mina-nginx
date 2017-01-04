@@ -1,15 +1,14 @@
+<% application = fetch :application, 'application' %>
+<% socket_path = fetch :nginx_socket_path, '/path/to/web/socket' %>
+
 upstream <%= application %> {
-  # server www.example.com     weight=5;
-  # server 127.0.0.1:8080      max_fails=3 fail_timeout=30s;
-  # server unix:///path/to/web_socket.sock;
-  #
-  server unix:///PATH/TO/WEB_SOCKET fail_timeout=0;
+  server unix://<%= socket_path %> fail_timeout=0;
 }
 
 server {
   listen 80 default deferred;
-  <%= server_name.to_s.empty? ? "# server_name example.com" : "server_name #{server_name}" %>;
-  root <%= deploy_to %>/<%= current_path %>/public;
+  server_name <%= fetch :server_name, fetch(:domain) %>
+  root <%= "#{fetch :deploy_to}/#{fetch :current_path}/public" %>;
 
   location ^~ /assets/ {
     gzip_static on;
